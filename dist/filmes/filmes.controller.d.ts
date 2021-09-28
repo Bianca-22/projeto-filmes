@@ -4,6 +4,10 @@ import { Filme } from '.prisma/client';
 export declare class FilmesController {
     private filmesService;
     constructor(filmesService: FilmesService);
-    index(): Promise<Filme[]>;
+    findMany(): Promise<Filme[]>;
     create(createFilme: CreateFilmeDto): Promise<Filme>;
+    delete(id: string): Promise<Filme>;
+    deleteMany(): Promise<import(".prisma/client").Prisma.BatchPayload>;
+    findUnique(id: number): Promise<Filme>;
+    update(updateFilme: CreateFilmeDto, id: number): Promise<Filme>;
 }
