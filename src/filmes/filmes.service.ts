@@ -1,26 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFilmeDto } from './dto/create-filme.dto';
-
-export type Filme = {
-  nome: string;
-  imagem?: string;
-};
-
-const filmes: Filme[] = [
-  {
-    nome: 'Homem-Aranha',
-    imagem:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJxX9fFVzs9-Epm70RRuBAzjLdMM9YIYW9sg&usqp=CAU',
-  },
-];
+import { Filme, Prisma } from '.prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FilmesService {
-  getAll() {
-    return filmes;
+  constructor(private prisma: PrismaService) {}
+
+  async getAll(): Promise<Filme[]> {
+    return this.prisma.filme.findMany();
   }
 
-  createFilme(filme: CreateFilmeDto) {
-    return filmes.push(filme);
+  async createFilme(data: Prisma.FilmeCreateInput):Promise<Filme> {
+    return this.prisma.filme.create({ data });
   }
 }
